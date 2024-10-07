@@ -4,12 +4,8 @@ import Home from "./pages/Home";
 function Router() {
   const router = createBrowserRouter([
     {
-      path: "/home",
-      element: <Home />,
-    },
-    {
       path: "/",
-      element: <h1>Hola Mundo</h1>,
+      element: <Home />,
     },
   ]);
 
