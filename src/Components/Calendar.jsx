@@ -5,7 +5,7 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 
 const StyledDateCalendar = () => {
   return (
-    <div className="bg-gray-900 text-white p-4 rounded-lg w-full">
+    <div className="bg-gray-900 bg-opacity-70 text-white p-4 rounded-lg w-full backdrop-blur-sm">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateCalendar
           className="text-white"
@@ -40,17 +40,17 @@ const StyledDateCalendar = () => {
               fontSize: "1rem",
               color: "white",
               "&:hover": {
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                backgroundColor: "rgba(255, 255, 255, 0.2)",
               },
               "&.Mui-selected": {
-                backgroundColor: "rgb(249 115 22)",
+                backgroundColor: "rgba(249, 115, 22, 0.8)",
                 "&:hover": {
-                  backgroundColor: "rgb(249 115 22)",
+                  backgroundColor: "rgba(249, 115, 22, 0.9)",
                 },
               },
             },
             "& .MuiPickersDay-today": {
-              border: "1px solid rgb(249 115 22)",
+              border: "1px solid rgba(249, 115, 22, 0.8)",
             },
             "& .MuiTypography-root": {
               color: "white",
