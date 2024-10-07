@@ -3,7 +3,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 
-const StyledDateCalendar = () => {
+const Calendar = () => {
   return (
     <div className="bg-gray-900 bg-opacity-70 text-white p-4 rounded-lg w-full backdrop-blur-sm">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -65,4 +65,4 @@ const StyledDateCalendar = () => {
   );
 };
 
-export default StyledDateCalendar;
+export default Calendar;

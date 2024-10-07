@@ -28,7 +28,6 @@ function Card({
         <h2 className="text-xl font-semibold break-words">{title}</h2>
         <p className="text-gray-300 text-sm mt-1 break-words">{description}</p>
       </header>
-
       <footer className="mt-auto pt-4">
         <div className="flex flex-col space-y-4">
           <div>
@@ -41,14 +40,18 @@ function Card({
               aria-valuemax="10"
             >
               <div
-                className="bg-orange-500 bg-opacity-80 h-2 rounded-full"
-                style={{ width: `${(safeProgress / 10) * 100}%` }}
+                className="h-2 rounded-full"
+                style={{
+                  width: `${(safeProgress / 10) * 100}%`,
+                  background:
+                    "linear-gradient(90deg, #FF6B6B 0%, #FFD93D 100%)",
+                }}
               ></div>
             </div>
             <p className="mt-1 text-sm text-right">{safeProgress}/10</p>
           </div>
           <div className="text-right">
-            <time className="text-xs sm:text-sm text-gray-300 bg-gray-800 bg-opacity-50 px-2 py-1 rounded-full inline-block">
+            <time className="text-xs sm:text-sm  bg-gray-800 bg-opacity-50 px-2 py-1 rounded-full inline-block">
               {date}
             </time>
           </div>
