@@ -1,16 +1,31 @@
 import React from "react";
+import { Trash2 } from "lucide-react";
 
 function Card({
+  id,
   image,
-  title = "Untitled",
-  description = "No description",
+  title = "Sin Titulo",
+  description = "Sin descripción",
   date = "12 Nov 2022",
   progress = 3,
+  onDelete,
 }) {
   const safeProgress = Math.min(Math.max(0, progress), 10);
+  const handleDelete = () => {
+    if (window.confirm("¿Estás seguro de que quieres eliminar esta tarjeta?")) {
+      onDelete(id);
+    }
+  };
 
   return (
-    <article className="bg-gray-900 bg-opacity-70 text-white p-4 rounded-lg w-full max-w-sm mx-auto flex flex-col h-full backdrop-blur-sm">
+    <article className="bg-gray-900 bg-opacity-70 text-white p-4 rounded-lg w-full max-w-sm mx-auto flex flex-col h-full backdrop-blur-sm transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-lg relative">
+      <button
+        onClick={handleDelete}
+        className="absolute top-2 right-2 text-gray-300 hover:text-red-500 transition-colors duration-200"
+        aria-label="Eliminar tarjeta"
+      >
+        <Trash2 size={20} />
+      </button>
       <header className="flex-grow">
         {image && (
           <figure className="relative mb-4">
@@ -50,8 +65,8 @@ function Card({
             </div>
             <p className="mt-1 text-sm text-right">{safeProgress}/10</p>
           </div>
-          <div className="text-right">
-            <time className="text-xs sm:text-sm  bg-gray-800 bg-opacity-50 px-2 py-1 rounded-full inline-block">
+          <div className="flex justify-start items-center">
+            <time className="text-xs sm:text-sm bg-gray-800 bg-opacity-50 px-2 py-1 rounded-full inline-block">
               {date}
             </time>
           </div>
