@@ -6,6 +6,7 @@ const AddCardModal = ({ isOpen, onClose, onAdd }) => {
     title: "",
     description: "",
     progress: 0,
+    startDate: new Date().toISOString(),
   });
 
   const handleChange = (e) => {
@@ -17,7 +18,12 @@ const AddCardModal = ({ isOpen, onClose, onAdd }) => {
     e.preventDefault();
     onAdd(newCard);
     onClose();
-    setNewCard({ title: "", description: "", progress: 0 });
+    setNewCard({
+      title: "",
+      description: "",
+      progress: 0,
+      startDate: new Date().toISOString(),
+    });
   };
 
   if (!isOpen) return null;

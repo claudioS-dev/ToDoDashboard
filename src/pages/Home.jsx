@@ -85,6 +85,7 @@ const Home = () => {
             title={card.title}
             description={card.description}
             progress={card.progress}
+            date={new Date(card.startDate).toLocaleDateString()}
             onDelete={handleDeleteCard}
             onEdit={handleEditCard}
           />
