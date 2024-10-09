@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-
 import Card from "../Components/Card";
-
 import Calendar from "../Components/Calendar";
-
 import AddCard from "../Components/AddCard";
 import EditCardModal from "../Components/EditCardModal";
+import AddCardModal from "../Components/AddCardModal";
 import axios from "axios";
 
 const api = axios.create({
@@ -15,6 +13,7 @@ const api = axios.create({
 const Home = () => {
   const [cards, setCards] = useState([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingCard, setEditingCard] = useState(null);
 
   useEffect(() => {
@@ -33,7 +32,6 @@ const Home = () => {
   const handleDeleteCard = async (id) => {
     try {
       await api.delete(`/api/cards/${id}`);
-
       setCards(cards.filter((card) => card._id !== id));
     } catch (error) {
       console.error("Error deleting card", error);
@@ -42,7 +40,6 @@ const Home = () => {
 
   const handleEditCard = (id) => {
     const cardToEdit = cards.find((card) => card._id === id);
-
     setEditingCard(cardToEdit);
     setIsEditModalOpen(true);
   };
@@ -53,17 +50,25 @@ const Home = () => {
         `/api/cards/${editedCard._id}`,
         editedCard
       );
-
       setCards(
         cards.map((card) =>
           card._id === editedCard._id ? response.data : card
         )
       );
-
       setIsEditModalOpen(false);
       setEditingCard(null);
     } catch (error) {
-      console.error("Error actualizando la carta", error);
+      console.error("Error updating the card", error);
+    }
+  };
+
+  const handleAddCard = async (newCard) => {
+    try {
+      const response = await api.post("/api/cards", newCard);
+      setCards([...cards, response.data]);
+      setIsAddModalOpen(false);
+    } catch (error) {
+      console.error("Error adding new card", error);
     }
   };
 
@@ -73,7 +78,6 @@ const Home = () => {
         <div className="row-span-2 sm:col-span-2 lg:col-span-1">
           <Calendar />
         </div>
-
         {cards.map((card) => (
           <Card
             key={card._id}
@@ -85,10 +89,8 @@ const Home = () => {
             onEdit={handleEditCard}
           />
         ))}
-
-        <AddCard onAdd={() => handleEditCard(null)} />
+        <AddCard onAdd={() => setIsAddModalOpen(true)} />
       </div>
-
       <EditCardModal
         isOpen={isEditModalOpen}
         onClose={() => {
@@ -97,6 +99,11 @@ const Home = () => {
         }}
         onSave={handleSaveEdit}
         card={editingCard}
+      />
+      <AddCardModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onAdd={handleAddCard}
       />
     </div>
   );
