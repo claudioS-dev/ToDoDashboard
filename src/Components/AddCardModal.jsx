@@ -5,7 +5,7 @@ const AddCardModal = ({ isOpen, onClose, onAdd }) => {
   const [newCard, setNewCard] = useState({
     title: "",
     description: "",
-    progress: 0,
+    progress: 1,
     startDate: new Date().toISOString(),
   });
 

@@ -66,7 +66,7 @@ function Card({
       <footer className="mt-auto pt-4">
         <div className="flex flex-col space-y-4">
           <div>
-            <h3 className="text-sm text-gray-300">Progress</h3>
+            <h3 className="text-sm text-gray-300">Progreso</h3>
             <div
               className="mt-1 bg-gray-700 bg-opacity-50 rounded-full h-2"
               role="progressbar"
