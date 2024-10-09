@@ -7,6 +7,10 @@ function Router() {
       path: "/",
       element: <Home />,
     },
+    {
+      path: "/about",
+      element: <h1>prueba</h1>,
+    },
   ]);
 
   return (
