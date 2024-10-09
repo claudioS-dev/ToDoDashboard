@@ -1,31 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Slider } from "@/components/ui/slider";
 
 const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
-  const [editedCard, setEditedCard] = useState(card);
+  const [editedCard, setEditedCard] = useState({
+    title: "",
+    description: "",
+    progress: 0,
+  });
 
   useEffect(() => {
-    setEditedCard(card);
+    if (card) {
+      setEditedCard(card);
+    }
   }, [card]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedCard((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleProgressChange = (value) => {
-    setEditedCard((prev) => ({ ...prev, progress: value[0] }));
   };
 
   const handleSubmit = (e) => {
@@ -34,67 +25,95 @@ const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
     onClose();
   };
 
+  if (!isOpen) return null;
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Edit Card</DialogTitle>
-          <Button
-            className="absolute right-4 top-4"
-            variant="ghost"
-            onClick={onClose}
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        </DialogHeader>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <div className="bg-gray-800 p-6 rounded-lg w-full max-w-md">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-bold text-white">Editar Tarjeta</h2>
+
+          <button onClick={onClose} className="text-gray-400 hover:text-white">
+            <X size={24} />
+          </button>
+        </div>
+
         <form onSubmit={handleSubmit}>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="title" className="text-right">
-                Title
-              </label>
-              <Input
-                id="title"
-                name="title"
-                value={editedCard.title}
-                onChange={handleChange}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="description" className="text-right">
-                Description
-              </label>
-              <Textarea
-                id="description"
-                name="description"
-                value={editedCard.description}
-                onChange={handleChange}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <label htmlFor="progress" className="text-right">
-                Progress
-              </label>
-              <div className="col-span-3">
-                <Slider
-                  id="progress"
-                  min={0}
-                  max={10}
-                  step={1}
-                  value={[editedCard.progress]}
-                  onValueChange={handleProgressChange}
-                />
-              </div>
-            </div>
+          <div className="mb-4">
+            <label
+              htmlFor="title"
+              className="block text-sm font-medium text-gray-300 mb-1"
+            >
+              Título
+            </label>
+
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={editedCard.title}
+              onChange={handleChange}
+              className="w-full px-3 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
-          <DialogFooter>
-            <Button type="submit">Save changes</Button>
-          </DialogFooter>
+
+          <div className="mb-4">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-300 mb-1"
+            >
+              Descripción
+            </label>
+
+            <textarea
+              id="description"
+              name="description"
+              value={editedCard.description}
+              onChange={handleChange}
+              rows="3"
+              className="w-full px-3 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            ></textarea>
+          </div>
+
+          <div className="mb-4">
+            <label
+              htmlFor="progress"
+              className="block text-sm font-medium text-gray-300 mb-1"
+            >
+              Progreso: {editedCard.progress}
+            </label>
+
+            <input
+              type="range"
+              id="progress"
+              name="progress"
+              min="0"
+              max="10"
+              value={editedCard.progress}
+              onChange={handleChange}
+              className="w-full"
+            />
+          </div>
+
+          <div className="flex justify-end space-x-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+            >
+              Cancelar
+            </button>
+
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              Guardar
+            </button>
+          </div>
         </form>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>
   );
 };
 

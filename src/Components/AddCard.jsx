@@ -15,6 +15,7 @@ const AddCard = () => {
               strokeWidth="4"
               strokeDasharray="15,15"
             />
+
             <g transform="translate(50,50)">
               <line
                 x1="-20"
@@ -24,6 +25,7 @@ const AddCard = () => {
                 stroke="white"
                 strokeWidth="4"
               />
+
               <line
                 x1="0"
                 y1="-20"
