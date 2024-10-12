@@ -15,6 +15,7 @@ const Home = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingCard, setEditingCard] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   useEffect(() => {
     fetchCards();
@@ -67,16 +68,22 @@ const Home = () => {
       const response = await api.post("/api/cards", newCard);
       setCards([...cards, response.data]);
       setIsAddModalOpen(false);
+      setSelectedDate(null);
     } catch (error) {
       console.error("Error adding new card", error);
     }
+  };
+
+  const handleDateSelect = (date) => {
+    setSelectedDate(date);
+    setIsAddModalOpen(true);
   };
 
   return (
     <div className="p-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         <div className="row-span-2 sm:col-span-2 lg:col-span-1">
-          <Calendar />
+          <Calendar onDateSelect={handleDateSelect} />
         </div>
         {cards.map((card) => (
           <Card
@@ -103,8 +110,12 @@ const Home = () => {
       />
       <AddCardModal
         isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
+        onClose={() => {
+          setIsAddModalOpen(false);
+          setSelectedDate(null);
+        }}
         onAdd={handleAddCard}
+        initialDate={selectedDate}
       />
     </div>
   );

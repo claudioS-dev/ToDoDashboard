@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
 
-const AddCardModal = ({ isOpen, onClose, onAdd }) => {
+const AddCardModal = ({ isOpen, onClose, onAdd, initialDate }) => {
   const [newCard, setNewCard] = useState({
     title: "",
     description: "",
     progress: 1,
     startDate: new Date().toISOString().split("T")[0],
   });
+
+  useEffect(() => {
+    if (initialDate) {
+      setNewCard((prev) => ({ ...prev, startDate: initialDate }));
+    }
+  }, [initialDate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
