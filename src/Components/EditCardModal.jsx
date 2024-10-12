@@ -6,11 +6,15 @@ const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
     title: "",
     description: "",
     progress: 0,
+    startDate: "",
   });
 
   useEffect(() => {
     if (card) {
-      setEditedCard(card);
+      setEditedCard({
+        ...card,
+        startDate: new Date(card.startDate).toISOString().split("T")[0],
+      });
     }
   }, [card]);
 
@@ -73,6 +77,23 @@ const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
               rows="3"
               className="w-full px-3 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></textarea>
+          </div>
+
+          <div className="mb-4">
+            <label
+              htmlFor="startDate"
+              className="block text-sm font-medium text-gray-300 mb-1"
+            >
+              Fecha de inicio
+            </label>
+            <input
+              type="date"
+              id="startDate"
+              name="startDate"
+              value={editedCard.startDate}
+              onChange={handleChange}
+              className="w-full px-3 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
 
           <div className="mb-4">

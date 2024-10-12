@@ -6,7 +6,7 @@ const AddCardModal = ({ isOpen, onClose, onAdd }) => {
     title: "",
     description: "",
     progress: 1,
-    startDate: new Date().toISOString(),
+    startDate: new Date().toISOString().split("T")[0],
   });
 
   const handleChange = (e) => {
@@ -22,7 +22,7 @@ const AddCardModal = ({ isOpen, onClose, onAdd }) => {
       title: "",
       description: "",
       progress: 0,
-      startDate: new Date().toISOString(),
+      startDate: new Date().toISOString().split("T")[0],
     });
   };
 
@@ -70,6 +70,22 @@ const AddCardModal = ({ isOpen, onClose, onAdd }) => {
               rows="3"
               className="w-full px-3 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></textarea>
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="startDate"
+              className="block text-sm font-medium text-gray-300 mb-1"
+            >
+              Fecha de inicio
+            </label>
+            <input
+              type="date"
+              id="startDate"
+              name="startDate"
+              value={newCard.startDate}
+              onChange={handleChange}
+              className="w-full px-3 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
           </div>
           <div className="mb-4">
             <label
