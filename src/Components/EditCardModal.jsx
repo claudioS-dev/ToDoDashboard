@@ -25,7 +25,9 @@ const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSave(editedCard);
+    const nextDay = new Date(editedCard.startDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    onSave({ ...editedCard, startDate: nextDay.toISOString().split("T")[0] });
     onClose();
   };
 
@@ -36,12 +38,10 @@ const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
       <div className="bg-gray-800 p-6 rounded-lg w-full max-w-md">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold text-white">Editar Tarjeta</h2>
-
           <button onClick={onClose} className="text-gray-400 hover:text-white">
             <X size={24} />
           </button>
         </div>
-
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
@@ -50,7 +50,6 @@ const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
             >
               Título
             </label>
-
             <input
               type="text"
               id="title"
@@ -60,7 +59,6 @@ const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
               className="w-full px-3 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-
           <div className="mb-4">
             <label
               htmlFor="description"
@@ -68,7 +66,6 @@ const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
             >
               Descripción
             </label>
-
             <textarea
               id="description"
               name="description"
@@ -78,7 +75,6 @@ const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
               className="w-full px-3 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></textarea>
           </div>
-
           <div className="mb-4">
             <label
               htmlFor="startDate"
@@ -95,7 +91,6 @@ const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
               className="w-full px-3 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
-
           <div className="mb-4">
             <label
               htmlFor="progress"
@@ -103,7 +98,6 @@ const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
             >
               Progreso: {editedCard.progress}
             </label>
-
             <input
               type="range"
               id="progress"
@@ -115,7 +109,6 @@ const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
               className="w-full"
             />
           </div>
-
           <div className="flex justify-end space-x-2">
             <button
               type="button"
@@ -124,7 +117,6 @@ const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
             >
               Cancelar
             </button>
-
             <button
               type="submit"
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"

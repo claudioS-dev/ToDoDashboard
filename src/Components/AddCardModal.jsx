@@ -22,7 +22,9 @@ const AddCardModal = ({ isOpen, onClose, onAdd, initialDate }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onAdd(newCard);
+    const nextDay = new Date(newCard.startDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    onAdd({ ...newCard, startDate: nextDay.toISOString().split("T")[0] });
     onClose();
     setNewCard({
       title: "",
