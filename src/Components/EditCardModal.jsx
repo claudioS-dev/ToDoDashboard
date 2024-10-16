@@ -11,9 +11,11 @@ const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
 
   useEffect(() => {
     if (card) {
+      const adjustedDate = new Date(card.startDate);
+      adjustedDate.setDate(adjustedDate.getDate() - 1);
       setEditedCard({
         ...card,
-        startDate: new Date(card.startDate).toISOString().split("T")[0],
+        startDate: adjustedDate.toISOString().split("T")[0],
       });
     }
   }, [card]);
