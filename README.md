@@ -13,6 +13,12 @@ _Gestiona tus tareas y eventos con facilidad_
 
 ---
 
+## Estado del Proyecto
+
+🚧 **Este proyecto está actualmente en construcción** 🚧
+
+Por el momento, el proyecto cuenta con una base de datos funcional para almacenar las tareas. Sin embargo, aún falta implementar un sistema de login para gestionar la autenticación de usuarios. Estamos trabajando para añadir esta característica pronto.
+
 ## Descripción del Proyecto
 
 Esta aplicación de React permite a los usuarios gestionar tarjetas de tareas o eventos. Los usuarios pueden ver, añadir, editar y eliminar tarjetas, cada una con un título, descripción, fecha de inicio y progreso. La aplicación también incluye un calendario para seleccionar fechas fácilmente.
@@ -24,6 +30,10 @@ Esta aplicación de React permite a los usuarios gestionar tarjetas de tareas o 
 - 📅 Calendario integrado para selección de fechas
 - 📊 Seguimiento del progreso de las tareas
 - 🖼️ Interfaz de usuario intuitiva y responsiva
+
+## Características Pendientes
+
+- 🔐 Sistema de login para autenticación de usuarios
 
 ## Estructura del Proyecto
 
