@@ -3,7 +3,16 @@
 @tailwind utilities;
 
 body {
-  background-image: url("./assets/img.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
+  background: radial-gradient(
+    circle at center,
+    #5a189a 0%,
+    #5a189a 10%,
+    #3c096c 25%,
+    #240046 50%,
+    #10002b 100%
+  );
+  background-attachment: fixed;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
