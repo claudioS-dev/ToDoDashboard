@@ -3,19 +3,18 @@ import { X } from "lucide-react";
 
 const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
   const [editedCard, setEditedCard] = useState({
+    id: "",
     title: "",
     description: "",
     progress: 0,
-    startDate: "",
+    start_date: "",
   });
 
   useEffect(() => {
     if (card) {
-      const adjustedDate = new Date(card.startDate);
-      adjustedDate.setDate(adjustedDate.getDate() - 1);
       setEditedCard({
         ...card,
-        startDate: adjustedDate.toISOString().split("T")[0],
+        start_date: new Date(card.start_date).toISOString().split("T")[0], // Formatear la fecha
       });
     }
   }, [card]);
@@ -27,10 +26,14 @@ const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const nextDay = new Date(editedCard.startDate);
-    nextDay.setDate(nextDay.getDate() + 1);
-    onSave({ ...editedCard, startDate: nextDay.toISOString().split("T")[0] });
-    onClose();
+    // Crear una fecha ISO completa
+    const dateWithTime = new Date(editedCard.start_date);
+    const isoDate = dateWithTime.toISOString();
+
+    onSave({
+      ...editedCard,
+      start_date: isoDate,
+    });
   };
 
   if (!isOpen) return null;
@@ -79,16 +82,16 @@ const EditCardModal = ({ isOpen, onClose, onSave, card }) => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="startDate"
+              htmlFor="start_date"
               className="block text-sm font-medium text-gray-300 mb-1"
             >
               Fecha de inicio
             </label>
             <input
               type="date"
-              id="startDate"
-              name="startDate"
-              value={editedCard.startDate}
+              id="start_date"
+              name="start_date"
+              value={editedCard.start_date}
               onChange={handleChange}
               className="w-full px-3 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />

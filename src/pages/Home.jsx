@@ -7,7 +7,10 @@ import AddCardModal from "../Components/AddCardModal";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://flavio02.matyplop.cl/api2",
+  baseURL: "http://127.0.0.1:8000/",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 const Home = () => {
@@ -23,7 +26,7 @@ const Home = () => {
 
   const fetchCards = async () => {
     try {
-      const response = await api.get("/api/cards");
+      const response = await api.get("/api/cards/");
       setCards(response.data);
     } catch (error) {
       console.error("Error fetching cards", error);
@@ -32,15 +35,16 @@ const Home = () => {
 
   const handleDeleteCard = async (id) => {
     try {
-      await api.delete(`/api/cards/${id}`);
-      setCards(cards.filter((card) => card._id !== id));
+      await api.delete(`/api/cards/${id}/`);
+      setCards(cards.filter((card) => card.id !== id));
+      fetchCards(); // Refrescar la lista después de eliminar
     } catch (error) {
       console.error("Error deleting card", error);
     }
   };
 
   const handleEditCard = (id) => {
-    const cardToEdit = cards.find((card) => card._id === id);
+    const cardToEdit = cards.find((card) => card.id === id);
     setEditingCard(cardToEdit);
     setIsEditModalOpen(true);
   };
@@ -48,16 +52,15 @@ const Home = () => {
   const handleSaveEdit = async (editedCard) => {
     try {
       const response = await api.put(
-        `/api/cards/${editedCard._id}`,
+        `/api/cards/${editedCard.id}/`,
         editedCard
       );
       setCards(
-        cards.map((card) =>
-          card._id === editedCard._id ? response.data : card
-        )
+        cards.map((card) => (card.id === editedCard.id ? response.data : card))
       );
       setIsEditModalOpen(false);
       setEditingCard(null);
+      fetchCards(); // Refrescar la lista después de editar
     } catch (error) {
       console.error("Error updating the card", error);
     }
@@ -65,10 +68,11 @@ const Home = () => {
 
   const handleAddCard = async (newCard) => {
     try {
-      const response = await api.post("/api/cards", newCard);
+      const response = await api.post("/api/cards/", newCard);
       setCards([...cards, response.data]);
       setIsAddModalOpen(false);
       setSelectedDate(null);
+      fetchCards(); // Refrescar la lista después de añadir
     } catch (error) {
       console.error("Error adding new card", error);
     }
@@ -87,12 +91,12 @@ const Home = () => {
         </div>
         {cards.map((card) => (
           <Card
-            key={card._id}
-            id={card._id}
+            key={card.id}
+            id={card.id}
             title={card.title}
             description={card.description}
             progress={card.progress}
-            date={new Date(card.startDate).toLocaleDateString()}
+            date={new Date(card.start_date).toLocaleDateString()}
             onDelete={handleDeleteCard}
             onEdit={handleEditCard}
           />

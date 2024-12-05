@@ -6,31 +6,42 @@ const AddCardModal = ({ isOpen, onClose, onAdd, initialDate }) => {
     title: "",
     description: "",
     progress: 1,
-    startDate: new Date().toISOString().split("T")[0],
+    start_date: new Date().toISOString(),
   });
 
   useEffect(() => {
     if (initialDate) {
-      setNewCard((prev) => ({ ...prev, startDate: initialDate }));
+      const date = new Date(initialDate);
+      setNewCard((prev) => ({
+        ...prev,
+        start_date: date.toISOString(),
+      }));
     }
   }, [initialDate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setNewCard((prev) => ({ ...prev, [name]: value }));
+    if (name === "start_date") {
+      // Para campos de fecha, convertir a ISO string
+      const date = new Date(value);
+      setNewCard((prev) => ({
+        ...prev,
+        [name]: date.toISOString(),
+      }));
+    } else {
+      setNewCard((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const nextDay = new Date(newCard.startDate);
-    nextDay.setDate(nextDay.getDate() + 1);
-    onAdd({ ...newCard, startDate: nextDay.toISOString().split("T")[0] });
+    onAdd(newCard);
     onClose();
     setNewCard({
       title: "",
       description: "",
       progress: 0,
-      startDate: new Date().toISOString().split("T")[0],
+      start_date: new Date().toISOString(),
     });
   };
 
@@ -81,16 +92,16 @@ const AddCardModal = ({ isOpen, onClose, onAdd, initialDate }) => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="startDate"
+              htmlFor="start_date"
               className="block text-sm font-medium text-gray-300 mb-1"
             >
               Fecha de inicio
             </label>
             <input
               type="date"
-              id="startDate"
-              name="startDate"
-              value={newCard.startDate}
+              id="start_date"
+              name="start_date"
+              value={newCard.start_date.split("T")[0]} // Mostrar solo la fecha en el input
               onChange={handleChange}
               className="w-full px-3 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
