@@ -7,7 +7,7 @@ import AddCardModal from "../Components/AddCardModal";
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/",
+  baseURL: "https://flavio02.matyplop.cl/apitest8000/",
   headers: {
     "Content-Type": "application/json",
   },
